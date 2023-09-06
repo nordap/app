@@ -4,7 +4,7 @@ import * as React from 'react';
 
 function App() {
 
-  let [a, b] = useState(['시간변환기', '아케인심볼계산기', '어센틱심볼계산기', '비약/몬파 효율']);
+  let [a, b] = useState(['시간변환기', '레지경로', '아케인심볼계산기', '어센틱심볼계산기', '비약/몬파 효율']);
 
   let [cmdText, setCmd] = useState('');
 
@@ -62,6 +62,7 @@ function App() {
   const SelectBox = (props) => {
     const handleSelectChange = (e) => {
       setTimeDiff({ ...timeDiff, [e.target.name]: e.target.value });
+      setOption({ ...selectedOption, [e.target.category]: e.target.name });
     }
     return (
       <select name={props.options[0].category} onChange={handleSelectChange}>
@@ -95,7 +96,7 @@ function App() {
           <SelectBox options={HOUR} defaultValue="0"></SelectBox>
           <div>
             {
-              timeDiff.daydiff === 0 ? <>오늘 </>: <>내일 </>
+              timeDiff.daydiff === 0 ? <>오늘 </> : <>내일 </>
             }
             {
               timeDiff.ampm === 0 ? <>오전 </> : <>오후 </>
@@ -116,7 +117,7 @@ function App() {
       </div>
       <div className='list'>
         <h4>{a[1]}</h4>
-        <p>이러저러한 기능</p>
+        <p>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</p>
       </div>
       <div className='list'>
         <h4>{a[2]}</h4>
@@ -124,6 +125,10 @@ function App() {
       </div>
       <div className='list'>
         <h4>{a[3]}</h4>
+        <p>이러저러한 기능</p>
+      </div>
+      <div className='list'>
+        <h4>{a[4]}</h4>
         <p>이러저러한 기능</p>
       </div>
     </div >
