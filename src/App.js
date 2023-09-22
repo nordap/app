@@ -1,6 +1,38 @@
 import './App.css';
 import { useState } from 'react';
 import * as React from 'react';
+import Select from 'react-select';
+
+const DAY = ['day',
+  [
+    { value: 0, label: '오늘' },
+    { value: 1, label: '내일' },
+  ]
+];
+
+const AMPM = ['ampm',
+  [
+    { value: 0, label: 'AM' },
+    { value: 12, label: 'PM' },
+  ]
+];
+
+const HOUR = ['hour',
+  [
+    { value: 0, label: '0' },
+    { value: 1, label: '1' },
+    { value: 2, label: '2' },
+    { value: 3, label: '3' },
+    { value: 4, label: '4' },
+    { value: 5, label: '5' },
+    { value: 6, label: '6' },
+    { value: 7, label: '7' },
+    { value: 8, label: '8' },
+    { value: 9, label: '9' },
+    { value: 10, label: '10' },
+    { value: 11, label: '11' },
+  ]
+];
 
 function App() {
 
@@ -13,13 +45,13 @@ function App() {
   let date = new Date(cur.getTime() + cur.getTimezoneOffset() * 60 * 1000 + korTimeDiff);
 
   let [timeDiff, setTimeDiff] = useState({
-    daydiff: 0,
+    day: 0,
     ampm: 0,
     hour: 0,
   })
 
   let [selectedOption, setOption] = useState({
-    daydiff: '오늘',
+    day: '오늘',
     ampm: 'AM',
     hour: '0',
   })
@@ -33,51 +65,20 @@ function App() {
     }
   };
 
-  const DAYDIFF = [
-    { value: 0, name: '오늘', category: 'daydiff' },
-    { value: 1, name: '내일', category: 'daydiff' },
-  ];
-
-  const AMPM = [
-    { value: 0, name: 'AM', category: 'ampm' },
-    { value: 12, name: 'PM', category: 'ampm' },
-  ];
-
-  const HOUR = [
-    { value: 0, name: '0', category: 'hour' },
-    { value: 1, name: '1', category: 'hour' },
-    { value: 2, name: '2', category: 'hour' },
-    { value: 3, name: '3', category: 'hour' },
-    { value: 4, name: '4', category: 'hour' },
-    { value: 5, name: '5', category: 'hour' },
-    { value: 6, name: '6', category: 'hour' },
-    { value: 7, name: '7', category: 'hour' },
-    { value: 8, name: '8', category: 'hour' },
-    { value: 9, name: '9', category: 'hour' },
-    { value: 10, name: '10', category: 'hour' },
-    { value: 11, name: '11', category: 'hour' },
-  ];
-
-
-  const SelectBox = (props) => {
-    const handleSelectChange = (e) => {
-      setTimeDiff({ ...timeDiff, [e.target.name]: e.target.value });
-      setOption({ ...selectedOption, [e.target.category]: e.target.name });
+  const MakeSelect = (props) => {
+    const handleSelect = (e) => {
+      setTimeDiff({ ...timeDiff, [e.label]: e.value });
     }
     return (
-      <select name={props.options[0].category} onChange={handleSelectChange}>
-        {
-          props.options.map((option) => (
-            <option
-              key={option.value}
-              value={option.value}
-              defaultValue={props.defaultValue === option.value}
-            >
-              {option.name}
-            </option>
-          ))
-        }
-      </select >
+      <>
+        <Select
+          name={props.options[0]}
+          onChange={handleSelect}
+          placeholder={props.options[0]}
+          options={props.options[1]}
+
+        />
+      </>
     );
   };
 
@@ -91,9 +92,9 @@ function App() {
         <h4>{a[0]}</h4>
         <p>셧다운 커맨드 뱉어 줌</p>
         <div>
-          <SelectBox options={DAYDIFF} defaultValue="0"></SelectBox>
-          <SelectBox options={AMPM} defaultValue="0"></SelectBox>
-          <SelectBox options={HOUR} defaultValue="0"></SelectBox>
+          <MakeSelect options={DAY} defaultValue="0"></MakeSelect>
+          <MakeSelect options={AMPM} defaultValue="0"></MakeSelect>
+          <MakeSelect options={HOUR} defaultValue="0"></MakeSelect>
           <div>
             {
               timeDiff.daydiff === 0 ? <>오늘 </> : <>내일 </>
