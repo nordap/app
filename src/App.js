@@ -13,7 +13,7 @@ const DAY = ['day',
 const AMPM = ['ampm',
   [
     { value: 0, label: 'AM' },
-    { value: 12, label: 'PM' },
+    { value: 1, label: 'PM' },
   ]
 ];
 
@@ -50,12 +50,6 @@ function App() {
     hour: 0,
   })
 
-  let [selectedOption, setOption] = useState({
-    day: '오늘',
-    ampm: 'AM',
-    hour: '0',
-  })
-
   const copyToClipBoard = (text) => {
     try {
       navigator.clipboard.writeText(text);
@@ -66,16 +60,23 @@ function App() {
   };
 
   const MakeSelect = (props) => {
+    let a = props.options[0];
     const handleSelect = (e) => {
-      setTimeDiff({ ...timeDiff, [e.label]: e.value });
+      setTimeDiff({ ...timeDiff, [a]: e.value });
     }
     return (
       <>
         <Select
-          name={props.options[0]}
+          width="240px"
+          height="40px"
+          name={a}
+          isSearchable={false}
           onChange={handleSelect}
-          placeholder={props.options[0]}
           options={props.options[1]}
+          value={{
+            target: timeDiff[a],
+            label: props.options[1][timeDiff[a]].label
+          }}
 
         />
       </>
@@ -91,29 +92,30 @@ function App() {
       <div className='list'>
         <h4>{a[0]}</h4>
         <p>셧다운 커맨드 뱉어 줌</p>
-        <div>
-          <MakeSelect options={DAY} defaultValue="0"></MakeSelect>
-          <MakeSelect options={AMPM} defaultValue="0"></MakeSelect>
-          <MakeSelect options={HOUR} defaultValue="0"></MakeSelect>
-          <div>
+        <div style={{width: '300px'}}>
+          <MakeSelect options={DAY} ></MakeSelect>
+          <MakeSelect options={AMPM} ></MakeSelect>
+          <MakeSelect options={HOUR} ></MakeSelect>
+          {/* <div>
             {
-              timeDiff.daydiff === 0 ? <>오늘 </> : <>내일 </>
+              timeDiff.day === 0 ? <>오늘 </> : <>내일 </>
             }
             {
               timeDiff.ampm === 0 ? <>오전 </> : <>오후 </>
             }
             {timeDiff.hour}시
-          </div>
+          </div> */}
           <button onClick={() => {
             let dTime = new Date(date.getFullYear(),
               date.getMonth(),
-              date.getDate() + parseInt(timeDiff.daydiff),
-              parseInt(timeDiff.ampm) + parseInt(timeDiff.hour)
+              date.getDate() + parseInt(timeDiff.day),
+              parseInt(timeDiff.ampm)*12 + parseInt(timeDiff.hour)
             );
             let result = parseInt((parseInt(dTime.getTime()) - parseInt(date.getTime())) / 1000);
             setCmd("shutdown -r -f -t " + result);
           }}>계산!</button>
-          <button onClick={() => { copyToClipBoard(cmdText) }} >{cmdText} <p>누르면 복사됨</p></button>
+          <div>커맨드: {cmdText}</div>
+          <button onClick={() => { copyToClipBoard(cmdText) }} >누르면 복사됨</button>
         </div>
       </div>
       <div className='list'>
