@@ -89,6 +89,7 @@ function App() {
         <div>내가 필요해서 만듦</div>
       </div>
 
+{/*************** 기능 1 *******************/}
       <div className='list'>
         <h4>{a[0]}</h4>
         <p>셧다운 커맨드 뱉어 줌</p>
@@ -118,18 +119,26 @@ function App() {
           <button onClick={() => { copyToClipBoard(cmdText) }} >누르면 복사됨</button>
         </div>
       </div>
+
+{/*************** 기능 2 *******************/}
       <div className='list'>
         <h4>{a[1]}</h4>
         <p>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</p>
       </div>
+
+{/*************** 기능 3 *******************/}
       <div className='list'>
         <h4>{a[2]}</h4>
         <p>이러저러한 기능</p>
       </div>
+
+{/*************** 기능 4 *******************/}
       <div className='list'>
         <h4>{a[3]}</h4>
         <p>이러저러한 기능</p>
       </div>
+
+{/*************** 기능 5 *******************/}
       <div className='list'>
         <h4>{a[4]}</h4>
         <p>이러저러한 기능</p>
