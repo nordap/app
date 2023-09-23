@@ -272,10 +272,10 @@ function App() {
               Math.floor(need * 1.8 * ((regionConst + 7) - (n - 1) / 3)) * 10000 + "메소"
               ;
 
-            setArcain(result);
+            setAuthentic(result);
           }
           }>계산</button>
-          <div>{arcainText ? arcainText : "여기에"}</div>
+          <div>{authenticText ? authenticText : "여기에"}</div>
         </div>
       </div>
 
