@@ -263,7 +263,7 @@ function App() {
             let now = parseInt(authenticState.now);
             let need = 9 * n * n + 20 * n;
             let remain = need - now;
-            const meso = Math.floor(need * 1.8 * ((regionConst + 7) - (n - 1) / 3)) * 10000;
+            const meso = Math.floor(need * 1.8 * ((regionConst + 7) - (n - 1) / 3)) * 100000;
 
             //필요 성장치 × 1.8 × {(지역상수 + 7) - (레벨 - 1)÷3}
             let result =
