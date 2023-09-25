@@ -1,66 +1,67 @@
-import './App.css';
-import { useState } from 'react';
-import * as React from 'react';
-import Select from 'react-select';
+import "./App.css";
+import { useState } from "react";
+import * as React from "react";
+import Select from "react-select";
 
-const DAY = ['day',
+const DAY = ["day",
   [
-    { value: 0, label: '오늘' },
-    { value: 1, label: '내일' },
+    { value: 0, label: "오늘" },
+    { value: 1, label: "내일" },
   ]
 ];
 
-const AMPM = ['ampm',
+const AMPM = ["ampm",
   [
-    { value: 0, label: 'AM' },
-    { value: 1, label: 'PM' },
+    { value: 0, label: "AM" },
+    { value: 1, label: "PM" },
   ]
 ];
 
-const HOUR = ['hour',
+const HOUR = ["hour",
   [
-    { value: 0, label: '0' },
-    { value: 1, label: '1' },
-    { value: 2, label: '2' },
-    { value: 3, label: '3' },
-    { value: 4, label: '4' },
-    { value: 5, label: '5' },
-    { value: 6, label: '6' },
-    { value: 7, label: '7' },
-    { value: 8, label: '8' },
-    { value: 9, label: '9' },
-    { value: 10, label: '10' },
-    { value: 11, label: '11' },
+    { value: 0, label: "0" },
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+    { value: 6, label: "6" },
+    { value: 7, label: "7" },
+    { value: 8, label: "8" },
+    { value: 9, label: "9" },
+    { value: 10, label: "10" },
+    { value: 11, label: "11" },
   ]
 ];
 
-const ARCANE = ['Arcane',
+const ARCANE = ["Arcane",
   [
-    { value: 0, label: '소멸의 여로' },
-    { value: 1, label: '츄츄 아일랜드' },
-    { value: 2, label: '레헬른' },
-    { value: 3, label: '아르카나' },
-    { value: 4, label: '모라스' },
-    { value: 5, label: '에스페라' },
+    { value: 0, label: "소멸의 여로" },
+    { value: 1, label: "츄츄 아일랜드" },
+    { value: 2, label: "레헬른" },
+    { value: 3, label: "아르카나" },
+    { value: 4, label: "모라스" },
+    { value: 5, label: "에스페라" },
   ]
 ]
 
-const AUTHENTIC = ['Authentic',
+const AUTHENTIC = ["Authentic",
   [
-    { value: 0, label: '세르니움' },
-    { value: 1, label: '아르크스' },
-    { value: 2, label: '오디움' },
-    { value: 3, label: '도원경' },
-    { value: 4, label: '아르테리아' },
-    { value: 5, label: '카르시온' },
+    { value: 0, label: "세르니움" },
+    { value: 1, label: "아르크스" },
+    { value: 2, label: "오디움" },
+    { value: 3, label: "도원경" },
+    { value: 4, label: "아르테리아" },
+    { value: 5, label: "카르시온" },
   ]
 ]
 
 function App() {
 
-  let [a, b] = useState(['시간변환기', '레지경로', '아케인심볼계산기', '어센틱심볼계산기', '비약/몬파 효율']);
+  let [a, b] = useState(["시간변환기", "레지경로", "아케인심볼계산기", "어센틱심볼계산기", "비약/몬파 효율"]);
 
-  let [cmdText, setCmd] = useState('');
+  let [cmdText, setCmd] = useState("");
+  let pathReg = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU";
   let cur = new Date();
   let korTimeDiff = 9 * 60 * 60 * 1000;
   let date = new Date(cur.getTime() + cur.getTimezoneOffset() * 60 * 1000 + korTimeDiff);
@@ -74,9 +75,9 @@ function App() {
   const copyToClipBoard = (text) => {
     try {
       navigator.clipboard.writeText(text);
-      alert('클립보드에 복사되었습니다');
+      alert("클립보드에 복사되었습니다");
     } catch (error) {
-      alert('실패. 재시도 필요');
+      alert("실패. 재시도 필요");
     }
   };
 
@@ -102,7 +103,7 @@ function App() {
     );
   };
 
-  let [arcainText, setArcain] = useState('');
+  let [arcainText, setArcain] = useState("");
   let [arcainState, setArcainState] = useState({
     region: 0,
     level: 0,
@@ -121,16 +122,15 @@ function App() {
           onChange={handleSelect}
           options={props.options[1]}
           value={{
-            target: arcainState['region'],
-            label: props.options[1][arcainState['region']].label
+            target: arcainState["region"],
+            label: props.options[1][arcainState["region"]].label
           }}
-
         />
       </>
     );
   };
 
-  let [authenticText, setAuthentic] = useState('');
+  let [authenticText, setAuthentic] = useState("");
   let [authenticState, setAuthenticState] = useState({
     region: 0,
     level: 0,
@@ -149,10 +149,9 @@ function App() {
           onChange={handleSelect}
           options={props.options[1]}
           value={{
-            target: authenticState['region'],
-            label: props.options[1][authenticState['region']].label
+            target: authenticState["region"],
+            label: props.options[1][authenticState["region"]].label
           }}
-
         />
       </>
     );
@@ -165,10 +164,10 @@ function App() {
       </div>
 
       {/*************** 기능 1 *******************/}
-      <div className='list'>
+      <div className="list">
         <h4>{a[0]}</h4>
         <p>셧다운 커맨드 뱉어 줌</p>
-        <div className='content'>
+        <div className="content">
           <TimeSelect options={DAY} ></TimeSelect>
           <TimeSelect options={AMPM} ></TimeSelect>
           <TimeSelect options={HOUR} ></TimeSelect>
@@ -196,17 +195,18 @@ function App() {
       </div>
 
       {/*************** 기능 2 *******************/}
-      <div className='list'>
+      <div className="list">
         <h4>{a[1]}</h4>
-        <p>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</p>
+        <div>{pathReg}</div>
+        <button onClick={() => { copyToClipBoard(pathReg) }} >누르면 복사됨</button>
       </div>
 
       {/*************** 기능 3 *******************/}
-      <div className='list'>
+      <div className="list">
         <h4>{a[2]}</h4>
         <p>심볼 종류, 현재 레벨, 현재 갯수 입력 시 남은 갯수와 일수, 레벨업 시 비용 출력</p>
 
-        <div className='content'>
+        <div className="content">
           <ArcainSelect options={ARCANE}></ArcainSelect>
           <input
             type="arcainState.level"
@@ -240,11 +240,11 @@ function App() {
       </div>
 
       {/*************** 기능 4 *******************/}
-      <div className='list'>
+      <div className="list">
         <h4>{a[3]}</h4>
         <p>심볼 종류, 현재 레벨, 현재 갯수 입력 시 남은 갯수와 일수, 레벨업 시 비용 출력</p>
 
-        <div className='content'>
+        <div className="content">
           <AuthenticSelect options={AUTHENTIC}></AuthenticSelect>
           <input
             type="authenticState.level"
@@ -280,7 +280,7 @@ function App() {
       </div>
 
       {/*************** 기능 5 *******************/}
-      <div className='list'>
+      <div className="list">
         <h4>{a[4]}</h4>
         <p>이러저러한 기능</p>
       </div>
