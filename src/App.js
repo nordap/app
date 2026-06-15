@@ -175,6 +175,68 @@ function App() {
 
   let [a, b] = useState(["시간변환기", "레지경로", "아케인심볼계산기", "어센틱심볼계산기", "비약/몬파 효율"]);
 
+    const openExternalBrowser = async () => {
+    const ua = navigator.userAgent || "";
+    const currentUrl = window.location.href;
+
+    const isAndroid = /Android/i.test(ua);
+    const isIOS =
+      /iPhone|iPad|iPod/i.test(ua) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+    const isKakao = /KAKAOTALK/i.test(ua);
+    const isLine = /Line\//i.test(ua);
+
+    // 1. 카카오톡 인앱브라우저
+    if (isKakao) {
+      window.location.href =
+        "kakaotalk://web/openExternal?url=" + encodeURIComponent(currentUrl);
+      return;
+    }
+
+    // 2. LINE 인앱브라우저
+    if (isLine) {
+      const url = new URL(currentUrl);
+      url.searchParams.set("openExternalBrowser", "1");
+      window.location.href = url.toString();
+      return;
+    }
+
+    // 3. Android 인앱브라우저 → Chrome 시도
+    if (isAndroid) {
+      const withoutScheme = currentUrl
+        .replace(/^https?:\/\//i, "")
+        .replace(/#/g, "%23");
+
+      window.location.href =
+        "intent://" +
+        withoutScheme +
+        "#Intent;scheme=https" +
+        ";package=com.android.chrome" +
+        ";S.browser_fallback_url=" +
+        encodeURIComponent(currentUrl) +
+        ";end";
+
+      return;
+    }
+
+    // 4. iOS 일반 인앱브라우저
+    // Safari 강제 실행은 안정적으로 불가능해서 복사 fallback
+    if (isIOS) {
+      try {
+        await navigator.clipboard.writeText(currentUrl);
+        alert("URL을 복사했습니다. Safari 또는 Chrome 주소창에 붙여넣어 확인하세요.");
+      } catch (error) {
+        window.prompt("아래 URL을 복사해서 Safari 또는 Chrome에서 열어주세요.", currentUrl);
+      }
+
+      return;
+    }
+
+    // 5. PC 또는 일반 브라우저
+    window.open(currentUrl, "_blank", "noopener,noreferrer");
+  };
+
   let [cmdText, setCmd] = useState("");
   let pathReg = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RunMRU";
   let cur = new Date();
