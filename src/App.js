@@ -367,6 +367,14 @@ function App() {
         <div>내가 필요해서 만듦</div>
       </div>
 
+            <div className="list">
+        <h4>인앱브라우저 탈출 테스트</h4>
+        <p>카카오톡, LINE, 인스타그램 등 인앱브라우저에서 아래 버튼을 눌러 테스트</p>
+        <button onClick={openExternalBrowser}>
+          Safari / Chrome에서 열기
+        </button>
+      </div>
+
       {/*************** 기능 1 *******************/}
       <div className="list">
         <h4>{a[0]}</h4>
